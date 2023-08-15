@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { EmployeesTable } from './employeesTable';
 import { AddEmployeeModal } from './addModal';
+import { LogoutButton } from '../Auth/Logout';
 
 const hrUser = JSON.parse(localStorage.getItem('hr_user'))
 const Employees = () => {
@@ -35,8 +36,9 @@ const Employees = () => {
   return (
     
     <div>
-      <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", padding:"1rem"}}>
-        <h2>Employees</h2>
+      <LogoutButton/>
+      <div style={{display:"flex", alignItems:"center", padding:"1rem"}}>
+        <h2 style={{marginRight:"8px"}}>Employees</h2>
         <AddEmployeeModal/>
       </div>
       <EmployeesTable employees= {employees} fetchEmployees = {fetchEmployees}/>

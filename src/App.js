@@ -10,7 +10,6 @@ const App = () => {
   return (
     <HashRouter>
       <Routes>
-        
         <Route path='/login' element={<NonAuthUser><Login /></NonAuthUser>} />
         <Route path='/' element={<Authuser><Employees /></Authuser>} />
         <Route path='/attendance/:username' element={<Authuser><Attendance /></Authuser>} />

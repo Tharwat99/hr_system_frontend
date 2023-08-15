@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AttendanceTable } from './attendanceTable';
+import { LogoutButton } from '../Auth/Logout';
 
 
 const hrUser=JSON.parse(localStorage.getItem('hr_user'));
@@ -32,6 +33,7 @@ const Attendance = () => {
       }, []);
     return (
         <div>
+            <LogoutButton/>
             <h2>{username}</h2>
             <AttendanceTable attendances={attendances}/>
             <Snackbar
