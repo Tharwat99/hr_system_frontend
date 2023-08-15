@@ -57,7 +57,7 @@
 // export default Login;
 
 import React, { useState } from 'react';
-import { Button, Snackbar, TextField } from '@mui/material';
+import { Button, CircularProgress, Snackbar, TextField } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
@@ -87,6 +87,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigateTo = useNavigate();
   const [errMsg, setErrMsg] = useState('');
+  const [loading, setLoading] = useState(false);
+  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,24 +103,29 @@ const Login = () => {
         alert('Please enter a password that is at least 6 characters long');
         return;
       }
-
+    setLoading(true)
     try {
       const response = await axios.post('http://127.0.0.1:80/employee/login/', {email, password});
       if (response.status === 200 ) {
         console.log(JSON.stringify(response.data))
+        
         localStorage.setItem('hr_user', JSON.stringify(response.data))
         navigateTo('/')
       } else {
-        console.error('Login failed.');
+        setErrMsg('Login failed.');
       }
+
     } catch (error) {
-      console.error('An error occurred during login:', error);
+      setErrMsg('Login failed:', error);
     }
+    setLoading(false)
+      
   };
 
   return (
     <div style={login_page_wrapper_style}>
       <form onSubmit={handleSubmit} style = {login_card_wrapper_style}>
+      <h2 style={{margin:"0"}}>SignIn</h2>
         <TextField
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -135,15 +142,15 @@ const Login = () => {
           variant="outlined"
         />
         <Button type="submit" variant="contained">
-          Submit
+        {loading ? <CircularProgress sx={{width:"25px !important", height:"25px !important", color:"#FFF"}}/> : "Save"}
         </Button>
       </form>
       <Snackbar
-  open={!!errMsg}
-  autoHideDuration={6000}
-  onClose={()=>{setErrMsg('')}}
-  message={errMsg}
-/>
+      open={!!errMsg}
+      autoHideDuration={6000}
+      onClose={()=>{setErrMsg('')}}
+      message={errMsg}
+    />
     </div>
   );
 };
