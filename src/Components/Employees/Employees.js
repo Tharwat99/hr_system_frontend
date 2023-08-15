@@ -25,7 +25,6 @@ const Employees = () => {
       setEmployees(response.data);
       
     } catch (error) {
-        console.log(error)
         if (error.response.status === 401){
             localStorage.removeItem('hr_user')
             navigateTo('/login')

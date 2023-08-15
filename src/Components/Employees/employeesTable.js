@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { EditEmployeeModal } from './editModal';
 import { DeleteUserModal } from './deleteModal';
+import { AttendanceModal } from './attendanceModal';
 
 
 export function EmployeesTable({employees, fetchEmployees}) {
@@ -20,6 +21,7 @@ export function EmployeesTable({employees, fetchEmployees}) {
             <TableCell align="center">Email</TableCell>
             <TableCell align="center">Group</TableCell>
             <TableCell align="center">Action</TableCell>
+            <TableCell align="center">Attendance</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -32,6 +34,7 @@ export function EmployeesTable({employees, fetchEmployees}) {
                 <EditEmployeeModal employee={employee} fetchEmployees = {fetchEmployees}/>
                 <DeleteUserModal employee={employee} fetchEmployees = {fetchEmployees}/>
               </TableCell>
+              <TableCell align="center"><AttendanceModal employee={employee} fetchEmployees = {fetchEmployees}/></TableCell>
             </TableRow>
           ))}
         </TableBody>

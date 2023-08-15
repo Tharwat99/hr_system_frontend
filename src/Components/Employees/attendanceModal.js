@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
-import { CircularProgress, Snackbar, TextField } from '@mui/material';
+import { Checkbox, CircularProgress, FormControlLabel, Snackbar, TextField } from '@mui/material';
 import React, { useEffect, useState }  from 'react';
 import axios from 'axios';
 
@@ -23,22 +23,24 @@ const style = {
   };
 
 const hrUser = JSON.parse(localStorage.getItem('hr_user'))  
-export function AddEmployeeModal({fetchEmployees}) {
+export function AttendanceModal({employee, fetchEmployees}) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   
-  const [employee, setEmployee] = useState({
-    'username':'',
-    'email':''
+  const [attendance, setAttendace] = useState({
+    'employee':employee.id,
+    'date':new Date(),
+    'present':true
   });
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useEffect(() => {
     if (open){
-        setEmployee({
-            'username':'',
-            'email':''
+        setAttendace({
+            'employee':employee.id,
+            'date':new Date(),
+            'present':false
           })
     }   
   }, [open]);
@@ -46,7 +48,7 @@ export function AddEmployeeModal({fetchEmployees}) {
     e.preventDefault()
     setLoading(true)
     try {
-        const response = await axios.post('http://127.0.0.1:80/employee/list-create/', employee,{
+        const response = await axios.post('http://127.0.0.1:80/attendance/list-create/', attendance,{
         headers: { Authorization: `Bearer ${hrUser.access}` },
       });
         fetchEmployees();
@@ -58,7 +60,7 @@ export function AddEmployeeModal({fetchEmployees}) {
   }
   return (
     <div>
-      <Button sx = {{fontSize:"0.75rem"}}onClick={handleOpen}>Add Employee <AddCircleTwoToneIcon sx = {{marginLeft:"0.5rem"}}/></Button>
+      <Button sx = {{fontSize:"0.75rem", color:"green"}}onClick={handleOpen}>Add Attendance <AddCircleTwoToneIcon sx = {{marginLeft:"0.5rem"}}/></Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -66,15 +68,17 @@ export function AddEmployeeModal({fetchEmployees}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <h2 style={{marginTop:'0'}}>Add Employee</h2>
+        <h2 style={{marginTop:'0'}}>Add Attendance</h2>
         <form onSubmit={(e)=>handleSubmit(e)} style={{display: 'flex', flexWrap:'wrap' }}>    
-            <TextField size = "small"  id="email" label="Email" variant="outlined" value={employee.email||''} onChange={(e)=>{
-                setEmployee(prev => ({...prev, email:e.target.value}))
-            }} sx={{width:"100%", margin:"8px 0"}}/>
-            
-            <TextField size = "small"  id="username" label="Username" variant="outlined" value={employee.username||''} onChange={(e)=>{
-                setEmployee(prev => ({...prev, username:e.target.value}))
-            }} sx={{width:"100%", margin:"8px 0"}}/>
+            <div style ={{display:"flex", width:"100%", justifyContent:"space-between"}}>
+                <TextField  size = "small"  id="date" label="date" type = "date" variant="outlined" value= {attendance.date} onChange={(e)=>{
+                    setAttendace(prev => ({...prev, date:e.target.value}))
+                }} sx={{width:"75%", margin:"8px 0"}}/>
+                
+                <FormControlLabel sx={{width:"20%"}} control={<Checkbox checked={attendance.present} onChange={(e)=>{
+                    setAttendace(prev => ({...prev, present:e.target.checked}))
+                }}/>} label="Present" />
+            </div>
             <Button variant="contained" type = 'submit' disabled={loading}  sx={{marginRight:"1rem"}}>
             {loading ? <CircularProgress sx={{width:"25px !important", height:"25px !important", color:"#FFF"}}/> : "Save"}
             </Button>

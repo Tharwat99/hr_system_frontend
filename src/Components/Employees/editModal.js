@@ -37,7 +37,8 @@ export function EditEmployeeModal({employee, fetchEmployees}) {
         setEmployeeToBeEdited({...employee})
     }   
   }, [open]);
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     setLoading(true)
     try {
         const response = await axios.put(`http://127.0.0.1:80/employee/details/${employee.username}`, 
@@ -45,6 +46,7 @@ export function EditEmployeeModal({employee, fetchEmployees}) {
           headers: { Authorization: `Bearer ${hrUser.access}` },
         });
         fetchEmployees();
+        handleClose();
       } catch (error) {
         setErrMsg('An error occurred while editing employee.');
     }
@@ -61,12 +63,12 @@ export function EditEmployeeModal({employee, fetchEmployees}) {
       >
         <Box sx={style}>
         <h2 style={{marginTop:'0'}}>Update Employee</h2>
-        <form onSubmit={handleSubmit} style={{display: 'flex', flexWrap:'wrap' }}>    
-            <TextField id="email" label="Email" variant="outlined" value={employeeToBeEdited.email||''} onChange={(e)=>{
+        <form onSubmit={(e)=>handleSubmit(e)} style={{display: 'flex', flexWrap:'wrap' }}>    
+            <TextField size = "small"  id="email" label="Email" variant="outlined" value={employeeToBeEdited.email||''} onChange={(e)=>{
                 setEmployeeToBeEdited(prev => ({...prev, email:e.target.value}))
             }} sx={{width:"100%", margin:"8px 0"}}/>
             
-            <TextField id="username" label="Username" variant="outlined" value={employeeToBeEdited.username||''} onChange={(e)=>{
+            <TextField size = "small"  id="username" label="Username" variant="outlined" value={employeeToBeEdited.username||''} onChange={(e)=>{
                 setEmployeeToBeEdited(prev => ({...prev, username:e.target.value}))
             }} sx={{width:"100%", margin:"8px 0"}}/>
             <Button variant="contained" type = 'submit' sx={{marginRight:"1rem"}} disabled={loading}>
