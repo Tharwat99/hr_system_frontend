@@ -1,0 +1,7 @@
+.edit_form_wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
