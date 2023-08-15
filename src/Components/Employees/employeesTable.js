@@ -8,15 +8,19 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { EditEmployeeModal } from './editModal';
 import { DeleteUserModal } from './deleteModal';
-import { AttendanceModal } from './attendanceModal';
+import { AttendanceModal } from './attendanceModal'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useNavigate } from 'react-router-dom';
 
 
 export function EmployeesTable({employees, fetchEmployees}) {
+  const navigate = useNavigate()
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell align="center">ViewAttendance</TableCell>
             <TableCell align="center">Username</TableCell>
             <TableCell align="center">Email</TableCell>
             <TableCell align="center">Group</TableCell>
@@ -27,6 +31,9 @@ export function EmployeesTable({employees, fetchEmployees}) {
         <TableBody>
           {employees.map((employee) => (
             <TableRow key={employee.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell align="center"><RemoveRedEyeIcon sx ={{cursor:"pointer"}} onClick= {()=>{
+                navigate(`/attendance/${employee.username}`)
+              }}/></TableCell>
               <TableCell align="center">{employee.username}</TableCell>
               <TableCell align="center">{employee.email}</TableCell>
               <TableCell align="center">{employee.group}</TableCell>
