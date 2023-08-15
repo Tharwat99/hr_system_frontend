@@ -1,12 +1,93 @@
+// import React, { useState } from 'react';
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+
+// const Login = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const navigateTo = useNavigate();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     // Validate email address
+//     if (!email.includes('@')) {
+//         alert('Please enter a valid email address');
+//         return;
+//       }
+  
+//       // Validate password
+//       if (password.length < 6) {
+//         alert('Please enter a password that is at least 6 characters long');
+//         return;
+//       }
+  
+//     try {
+//         const response = await axios.post('http://127.0.0.1:80/employee/login/', {
+//           email,
+//           password,
+//         });
+//         console.log(response.data); // Handle the successful login response
+//         localStorage.setItem('hr_user', JSON.stringify(response.data))
+//         navigateTo('/')
+//       } catch (error) {
+//         console.error(error.response.data); // Handle login error
+//       }
+//   };
+//   return (
+//     <div>
+//       <h2>Login</h2>
+//       <form onSubmit={handleSubmit}>
+//         <input
+//           type="email"
+//           placeholder="Email"
+//           value={email}
+//           onChange={(e) => setEmail(e.target.value)}
+//         />
+//         <input
+//           type="password"
+//           placeholder="Password"
+//           value={password}
+//           onChange={(e) => setPassword(e.target.value)}
+//         />
+//         <button type="submit">Login</button>
+//       </form>
+//     </div>
+//   );
+// };
+// export default Login;
+
 import React, { useState } from 'react';
-import axios from 'axios';
+import { Button, Snackbar, TextField } from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; 
+const login_page_wrapper_style = {
+    display: "flex",
+    width: "100vw",
+    height: "100vh",
+    alignItems: "center",
+    justifyContent: "center",
+}
+
+const login_card_wrapper_style = {
+  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+  borderRadius: "15px",
+  padding: "20px",
+  display: "flex",
+  flexWrap: "wrap",
+  minHeight: "300px",
+  minWidth: "300px",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "space-around",
+}
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigateTo = useNavigate();
-
+  const [errMsg, setErrMsg] = useState('');
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Validate email address
@@ -20,38 +101,51 @@ const Login = () => {
         alert('Please enter a password that is at least 6 characters long');
         return;
       }
-  
+
     try {
-        const response = await axios.post('http://127.0.0.1:80/employee/login/', {
-          email,
-          password,
-        });
-        console.log(response.data); // Handle the successful login response
+      const response = await axios.post('http://127.0.0.1:80/employee/login/', {email, password});
+      if (response.status === 200 ) {
+        console.log(JSON.stringify(response.data))
         localStorage.setItem('hr_user', JSON.stringify(response.data))
         navigateTo('/')
-      } catch (error) {
-        console.error(error.response.data); // Handle login error
+      } else {
+        console.error('Login failed.');
       }
+    } catch (error) {
+      console.error('An error occurred during login:', error);
+    }
   };
+
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
+    <div style={login_page_wrapper_style}>
+      <form onSubmit={handleSubmit} style = {login_card_wrapper_style}>
+        <TextField
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          id="outlined-basic"
+          label="Email"
+          variant="outlined"
         />
-        <input
-          type="password"
-          placeholder="Password"
+        <TextField
           value={password}
+          type = 'password'
           onChange={(e) => setPassword(e.target.value)}
+          id="outlined-basic"
+          label="Password"
+          variant="outlined"
         />
-        <button type="submit">Login</button>
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
       </form>
+      <Snackbar
+  open={!!errMsg}
+  autoHideDuration={6000}
+  onClose={()=>{setErrMsg('')}}
+  message={errMsg}
+/>
     </div>
   );
 };
+
 export default Login;
