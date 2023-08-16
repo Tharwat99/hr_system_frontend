@@ -23,13 +23,20 @@ export function AttendanceTable({attendances}) {
             <TableCell align="center">Present</TableCell>
           </TableRow>
         </TableHead>
+        
         <TableBody>
-          {attendances.map((attendance) => (
+        {attendances.length === 0 ? (
+          <TableRow>
+            <TableCell colSpan={6} align="center">No records found.</TableCell>
+          </TableRow>
+        ) : (
+          attendances.map((attendance) => (
             <TableRow key={attendance.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell align="center">{attendance.date}</TableCell>
               <TableCell align="center">{attendance.present?<CheckSharpIcon color = "info"/>:<CloseSharpIcon color="error"/>}</TableCell>
             </TableRow>
-          ))}
+          )))
+        }
         </TableBody>
       </Table>
     </TableContainer>
