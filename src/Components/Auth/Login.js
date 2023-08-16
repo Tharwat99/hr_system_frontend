@@ -142,7 +142,7 @@ const Login = () => {
           variant="outlined"
         />
         <Button type="submit" variant="contained">
-        {loading ? <CircularProgress sx={{width:"25px !important", height:"25px !important", color:"#FFF"}}/> : "Save"}
+        {loading ? <CircularProgress sx={{width:"25px !important", height:"25px !important", color:"#FFF"}}/> : "Done"}
         </Button>
       </form>
       <Snackbar
