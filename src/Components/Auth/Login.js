@@ -22,7 +22,7 @@
 //       }
   
 //     try {
-//         const response = await axios.post('http://127.0.0.1:80/employee/login/', {
+//         const response = await axios.post('https://hrsystemtask.azurewebsites.net/employee/login/', {
 //           email,
 //           password,
 //         });
@@ -61,12 +61,14 @@ import { Button, CircularProgress, Snackbar, TextField } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
+
 const login_page_wrapper_style = {
     display: "flex",
     width: "100vw",
     height: "100vh",
     alignItems: "center",
     justifyContent: "center",
+    overFlow:"hidden"
 }
 
 const login_card_wrapper_style = {
@@ -105,18 +107,15 @@ const Login = () => {
       }
     setLoading(true)
     try {
-      const response = await axios.post('http://127.0.0.1:80/employee/login/', {email, password});
+      const response = await axios.post('https://hrsystemtask.azurewebsites.net/employee/login/', {email, password});
       if (response.status === 200 ) {
-        console.log(JSON.stringify(response.data))
-        
         localStorage.setItem('hr_user', JSON.stringify(response.data))
         navigateTo('/')
       } else {
         setErrMsg('Login failed.');
       }
-
     } catch (error) {
-      setErrMsg('Login failed:', error);
+      setErrMsg('Login failed.', error);
     }
     setLoading(false)
       
@@ -142,7 +141,7 @@ const Login = () => {
           variant="outlined"
         />
         <Button type="submit" variant="contained">
-        {loading ? <CircularProgress sx={{width:"25px !important", height:"25px !important", color:"#FFF"}}/> : "Done"}
+        {loading ? <CircularProgress sx={{width:"25px !important", height:"25px !important", color:"#FFF"}}/> : "Login"}
         </Button>                                                       
       </form>
       <Snackbar

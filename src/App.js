@@ -5,7 +5,7 @@ import Employees from './Components/Employees/Employees';
 import { Authuser } from './Components/Auth/authUser';
 import { NonAuthUser } from './Components/Auth/NotauthUser';
 import Attendance from './Components/Attendance/Attendance';
-
+import "./App.css"
 const App = () => {
   return (
     <HashRouter>

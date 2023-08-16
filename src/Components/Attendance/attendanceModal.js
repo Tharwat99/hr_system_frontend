@@ -1,4 +1,3 @@
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -48,7 +47,7 @@ export function AttendanceModal({employee, fetchEmployees}) {
     e.preventDefault()
     setLoading(true)
     try {
-        const response = await axios.post('http://127.0.0.1:80/attendance/list-create/', attendance,{
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/attendance/list-create/`, attendance,{
         headers: { Authorization: `Bearer ${hrUser.access}` },
       });
         fetchEmployees();

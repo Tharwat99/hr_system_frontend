@@ -41,7 +41,7 @@ export function EditEmployeeModal({employee, fetchEmployees}) {
     e.preventDefault()
     setLoading(true)
     try {
-        const response = await axios.put(`http://127.0.0.1:80/employee/details/${employee.username}`, 
+        const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/employee/details/${employee.username}`, 
         employeeToBeEdited, {
           headers: { Authorization: `Bearer ${hrUser.access}` },
         });

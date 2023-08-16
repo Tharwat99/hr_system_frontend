@@ -17,7 +17,7 @@ const Attendance = () => {
     const getAttendances = async () => {
         setLoading(true)
         try {
-            const response = await axios.get(`http://127.0.0.1:80/employee/details/${username}`, 
+            const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/employee/details/${username}`, 
             {
               headers: { Authorization: `Bearer ${hrUser.access}` },
             });

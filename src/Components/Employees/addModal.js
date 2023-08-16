@@ -46,7 +46,7 @@ export function AddEmployeeModal({fetchEmployees}) {
     e.preventDefault()
     setLoading(true)
     try {
-        const response = await axios.post('http://127.0.0.1:80/employee/list-create/', employee,{
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/employee/list-create/`, employee,{
         headers: { Authorization: `Bearer ${hrUser.access}` },
       });
         fetchEmployees();
