@@ -21,8 +21,9 @@ const style = {
   
   };
 
-const hrUser = JSON.parse(localStorage.getItem('hr_user'))  
 export function AttendanceModal({employee, fetchEmployees}) {
+  
+  const hrUser = JSON.parse(localStorage.getItem('hr_user'))  
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");

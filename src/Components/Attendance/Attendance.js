@@ -6,9 +6,8 @@ import { AttendanceTable } from './attendanceTable';
 import { LogoutButton } from '../Auth/Logout';
 
 
-const hrUser=JSON.parse(localStorage.getItem('hr_user'));
-
-const Attendance = () => {
+const Attendance = () => {  
+    const hrUser=JSON.parse(localStorage.getItem('hr_user'));
     const [loading, setLoading] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [attendances, setAttendances] = useState([]);

@@ -19,9 +19,10 @@ const style = {
   p: 4,
   borderRadius: 8,
 };
-const hrUser=JSON.parse(localStorage.getItem('hr_user'));
 
 export  function DeleteUserModal({employee, fetchEmployees}) {
+  
+  const hrUser=JSON.parse(localStorage.getItem('hr_user'));
   // const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);

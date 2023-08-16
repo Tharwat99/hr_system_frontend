@@ -8,7 +8,6 @@ const style = {
     right:"25px",
 }
 
-const hrUser = JSON.parse(localStorage.getItem('hr_user'))
 const LogoutButton = () => {
     const navigate = useNavigate();
     const handleLogout = () =>{
