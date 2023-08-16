@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const style = {
     position:"absolute",
-    top:"40px",
+    top:"20px",
     right:"25px",
 }
 

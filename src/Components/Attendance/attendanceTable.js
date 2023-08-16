@@ -7,6 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
+import CheckSharpIcon from '@mui/icons-material/CheckSharp';
+import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 
 
 export function AttendanceTable({attendances}) {
@@ -25,7 +27,7 @@ export function AttendanceTable({attendances}) {
           {attendances.map((attendance) => (
             <TableRow key={attendance.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell align="center">{attendance.date}</TableCell>
-              <TableCell align="center">{attendance.present?"Present":"Absent"}</TableCell>
+              <TableCell align="center">{attendance.present?<CheckSharpIcon color = "info"/>:<CloseSharpIcon color="error"/>}</TableCell>
             </TableRow>
           ))}
         </TableBody>
