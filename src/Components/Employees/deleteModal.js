@@ -32,7 +32,7 @@ export  function DeleteUserModal({employee, fetchEmployees}) {
   const handleDeleteUser = async () => {
     setLoading(true)
     try {
-        await axios.delete(`http://127.0.0.1:80/employee/detais/${employee.username}`,  {
+        await axios.delete(`http://127.0.0.1:80/employee/details/${employee.username}`,  {
             headers: { Authorization: `Bearer ${hrUser.access}` },
         });
         fetchEmployees();

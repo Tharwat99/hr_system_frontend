@@ -47,8 +47,21 @@ export function EditEmployeeModal({employee, fetchEmployees}) {
         });
         fetchEmployees();
         handleClose();
-      } catch (error) {
-        setErrMsg('An error occurred while editing employee.');
+      }
+      catch (error) {
+        if (error.response.status === 400){
+          let error_msg = '';
+          for (let key in error.response.data) {
+            if (error.response.data.hasOwnProperty(key)) {
+              error_msg += key + ":";
+              error_msg += error.response.data[key][0]
+            }
+          }
+          setErrMsg(error_msg);
+        }else{
+          setErrMsg('An error occurred while editing employee.');
+        }
+        
     }
     setLoading(false)
   }
